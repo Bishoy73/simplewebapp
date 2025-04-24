@@ -4,7 +4,16 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    // Replace with your EC2 public IP
+    fetch('http://56.228.19.62:3000/api/hello') 
+      .then((res) => res.json())
+      .then((data) => setMessage(data.message))
+      .catch((error) => console.error('Error:', error));
+  }, []);
 
   return (
     <>
