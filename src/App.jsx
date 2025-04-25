@@ -9,7 +9,7 @@ function App() {
 
   useEffect(() => {
     // Replace with your EC2 public IP
-    fetch('http://56.228.19.62:3000/api/hello') 
+    fetch('http://51.20.136.139:3000/api/hello') 
       .then((res) => res.json())
       .then((data) => setMessage(data.message))
       .catch((error) => console.error('Error:', error));
