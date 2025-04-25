@@ -7,7 +7,7 @@ function FileUploader() {
 
   // جلب الملفات من الـ S3
   useEffect(() => {
-    fetch('http://51.20.136.139:3000/api/files')
+    fetch('http://51.20.136.139:3000/api/file-names')  // تأكد من استخدام الـ endpoint الصحيح
       .then(response => response.json())
       .then(data => {
         setFiles(data);
@@ -20,18 +20,29 @@ function FileUploader() {
   // التعامل مع رفع الملف
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
+    if (!file) {
+      alert('Please select a file to upload');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('file', file);
 
     try {
-      await fetch('http://51.20.136.139:3000/api/upload', {
+      const response = await fetch('http://51.20.136.139:3000/api/upload', {
         method: 'POST',
         body: formData,
       });
-      alert('File uploaded successfully!');
+
+      if (response.ok) {
+        alert('File uploaded successfully!');
+        setUploadedFile(file.name);
+      } else {
+        alert('Failed to upload file');
+      }
     } catch (error) {
       console.error('Error uploading file:', error);
-      alert('Failed to upload file');
+      alert('Error uploading file');
     }
   };
 
@@ -67,8 +78,16 @@ function FileUploader() {
           </a>
         </div>
       )}
+
+      {/* عرض الملف الذي تم رفعه */}
+      {uploadedFile && (
+        <div>
+          <p>Uploaded File: {uploadedFile}</p>
+        </div>
+      )}
     </div>
   );
 }
 
 export default FileUploader;
+
