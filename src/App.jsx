@@ -1,58 +1,70 @@
-import { useState, useEffect } from 'react';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function App() {
+function FileUploader() {
   const [files, setFiles] = useState([]);
   const [selectedFile, setSelectedFile] = useState('');
-  const [fileUrl, setFileUrl] = useState('');
+  const [uploadedFile, setUploadedFile] = useState(null);
 
-  // Fetch files list from the backend (EC2)
+  // جلب الملفات من الـ S3
   useEffect(() => {
-    fetch('http://51.20.136.139:3000/api/files') // Replace with your EC2 IP
-      .then((res) => res.json())
-      .then((data) => setFiles(data))
-      .catch((error) => console.error('Error fetching files:', error));
+    axios.get('http://51.20.136.139:3000/api/files')
+      .then(response => {
+        setFiles(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching files:', error);
+      });
   }, []);
 
-  // Fetch the URL of the selected file
-  const handleFileSelection = (fileName) => {
-    fetch(`http://51.20.136.139:3000/api/file-url?fileName=${fileName}`)
-      .then((res) => res.json())
-      .then((data) => setFileUrl(data.fileUrl))
-      .catch((error) => console.error('Error fetching file URL:', error));
+  // التعامل مع رفع الملف
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      await axios.post('http://51.20.136.139:3000/api/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      alert('File uploaded successfully!');
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      alert('Failed to upload file');
+    }
+  };
+
+  // التعامل مع اختيار الملف من قائمة S3
+  const handleFileSelect = (e) => {
+    setSelectedFile(e.target.value);
   };
 
   return (
-    <div className="App">
-      <h1>Vite + React</h1>
+    <div>
+      <h1>Upload and Select Files</h1>
 
-      {/* Dropdown to select a file */}
-      <div>
-        <label htmlFor="fileSelect">Select a file: </label>
-        <select
-          id="fileSelect"
-          value={selectedFile}
-          onChange={(e) => {
-            const fileName = e.target.value;
-            setSelectedFile(fileName);
-            handleFileSelection(fileName);
-          }}
-        >
-          <option value="">--Select a file--</option>
-          {files.map((file) => (
-            <option key={file} value={file}>
-              {file}
-            </option>
-          ))}
-        </select>
-      </div>
+      {/* حقل تحميل الملفات من الكمبيوتر */}
+      <input type="file" onChange={handleFileUpload} />
+      <br />
 
-      {/* Display the selected file URL */}
-      {fileUrl && (
+      {/* حقل اختيار الملفات من S3 */}
+      <select onChange={handleFileSelect}>
+        <option value="">Select a file from S3</option>
+        {files.map((file, index) => (
+          <option key={index} value={file}>
+            {file}
+          </option>
+        ))}
+      </select>
+
+      {/* عرض الملف الذي تم اختياره */}
+      {selectedFile && (
         <div>
-          <h3>File URL:</h3>
-          <a href={fileUrl} target="_blank" rel="noopener noreferrer">
-            {fileUrl}
+          <p>Selected File: {selectedFile}</p>
+          <a href={`https://files--pool.s3.amazonaws.com/${selectedFile}`} target="_blank" rel="noopener noreferrer">
+            Open File
           </a>
         </div>
       )}
@@ -60,4 +72,4 @@ function App() {
   );
 }
 
-export default App;
+export default FileUploader;
