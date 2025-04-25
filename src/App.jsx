@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 function FileUploader() {
   const [files, setFiles] = useState([]);
@@ -8,9 +7,10 @@ function FileUploader() {
 
   // جلب الملفات من الـ S3
   useEffect(() => {
-    axios.get('http://51.20.136.139:3000/api/files')
-      .then(response => {
-        setFiles(response.data);
+    fetch('http://51.20.136.139:3000/api/files')
+      .then(response => response.json())
+      .then(data => {
+        setFiles(data);
       })
       .catch(error => {
         console.error('Error fetching files:', error);
@@ -24,10 +24,9 @@ function FileUploader() {
     formData.append('file', file);
 
     try {
-      await axios.post('http://51.20.136.139:3000/api/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      await fetch('http://51.20.136.139:3000/api/upload', {
+        method: 'POST',
+        body: formData,
       });
       alert('File uploaded successfully!');
     } catch (error) {
@@ -71,5 +70,7 @@ function FileUploader() {
     </div>
   );
 }
+
+export default FileUploader;
 
 export default FileUploader;
