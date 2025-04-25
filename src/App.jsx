@@ -29,7 +29,7 @@ function FileUploader() {
     formData.append('file', file);
 
     try {
-      const response = await fetch('http://51.20.136.139:3000/api/upload', {
+      const response = await fetch('http://13.48.133.223:3000/api/upload', {
         method: 'POST',
         body: formData,
       });
