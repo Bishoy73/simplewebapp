@@ -72,5 +72,3 @@ function FileUploader() {
 }
 
 export default FileUploader;
-
-export default FileUploader;
