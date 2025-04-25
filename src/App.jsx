@@ -7,7 +7,7 @@ function FileUploader() {
 
   // جلب الملفات من الـ S3
   useEffect(() => {
-    fetch('http://51.20.136.139:3000/api/file-names')  // تأكد من استخدام الـ endpoint الصحيح
+    fetch('http://13.48.133.223:3000/api/file-names') 
       .then(response => response.json())
       .then(data => {
         setFiles(data);
