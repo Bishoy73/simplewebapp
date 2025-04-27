@@ -7,7 +7,7 @@ function FileUploader() {
 
   // جلب الملفات من الـ S3
   useEffect(() => {
-    fetch('http://13.48.133.223:3000/api/file-names') 
+    fetch('http://13.61.148.217:3000/api/file-names') 
       .then(response => response.json())
       .then(data => {
         setFiles(data);
@@ -29,7 +29,7 @@ function FileUploader() {
     formData.append('file', file);
 
     try {
-      const response = await fetch('http://13.48.133.223:3000/api/upload', {
+      const response = await fetch('http://13.61.148.217:3000/api/upload', {
         method: 'POST',
         body: formData,
       });
