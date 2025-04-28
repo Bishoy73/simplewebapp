@@ -9,9 +9,26 @@ body {
   font-family: 'Arial', sans-serif;
   background-color: #f0f8ff;
   color: #333;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Background cloud animation */
+@keyframes clouds {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
 }
 
 .file-uploader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
   text-align: center;
   padding: 20px;
 }
@@ -19,15 +36,34 @@ body {
 .header {
   background-color: #FF6347;
   color: white;
-  padding: 20px 0;
+  padding: 40px 0;
+  width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 header h1 {
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 
+/* Cloud background animation */
+.file-uploader::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 33%;
+  background-image: url('https://www.transparenttextures.com/patterns/clouds.png');
+  animation: clouds 30s linear infinite;
+  z-index: -1;
+}
+
+/* Upload Section */
 .upload-section {
   margin: 40px 0;
+  position: relative;
+  z-index: 1;
 }
 
 .upload-section input[type="file"] {
@@ -35,15 +71,17 @@ header h1 {
   margin: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
+  font-size: 1.1rem;
 }
 
 .cta-btn {
-  padding: 10px 20px;
+  padding: 12px 24px;
   background-color: #20B2AA;
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 5px;
+  font-size: 1.2rem;
   transition: background-color 0.3s ease;
 }
 
@@ -53,14 +91,17 @@ header h1 {
 
 .file-selection {
   margin: 20px 0;
+  position: relative;
+  z-index: 1;
 }
 
 .file-selection select {
-  padding: 10px;
+  padding: 12px;
   border-radius: 5px;
   border: 1px solid #ddd;
   background-color: white;
   font-size: 1rem;
+  width: 250px;
 }
 
 .file-details {
@@ -71,13 +112,34 @@ header h1 {
 .file-details a {
   color: #20B2AA;
   text-decoration: none;
+  font-weight: bold;
 }
 
 .file-details a:hover {
   text-decoration: underline;
 }
 
+/* Success Message */
+.success-message {
+  margin-top: 30px;
+  background-color: #28a745;
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  animation: fadeIn 1s ease-out;
+}
+
+/* Uploaded file details */
 .uploaded-file {
   margin-top: 20px;
+  font-size: 1.2rem;
   color: #20B2AA;
+}
+
+/* Animation for fading in success message */
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
