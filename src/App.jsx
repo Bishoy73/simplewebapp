@@ -5,6 +5,7 @@ function FileUploader() {
   const [files, setFiles] = useState([]);
   const [selectedFile, setSelectedFile] = useState('');
   const [uploadedFile, setUploadedFile] = useState(null);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
 
   useEffect(() => {
     fetch('http://13.61.148.217:3000/api/file-names')
@@ -24,6 +25,7 @@ function FileUploader() {
       const res = await fetch('http://13.61.148.217:3000/api/upload', { method: 'POST', body: formData });
       if (res.ok) {
         alert('Upload successful');
+        setUploadSuccess(true);
         setUploadedFile(file.name);
       } else {
         alert('Upload failed');
@@ -64,11 +66,19 @@ function FileUploader() {
         )}
       </section>
 
-      {uploadedFile && <p className="uploaded-file">Uploaded: {uploadedFile}</p>}
+      {uploadSuccess && (
+        <div className="success-message">
+          <p>🎉 File Uploaded Successfully!</p>
+        </div>
+      )}
+
+      {uploadedFile && (
+        <div className="uploaded-file">
+          <p>Uploaded: {uploadedFile}</p>
+        </div>
+      )}
     </div>
   );
 }
 
 export default FileUploader;
-
-
