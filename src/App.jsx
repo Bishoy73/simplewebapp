@@ -1,93 +1,74 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import './FileUploader.css'; // Custom CSS for styles
 
 function FileUploader() {
   const [files, setFiles] = useState([]);
   const [selectedFile, setSelectedFile] = useState('');
   const [uploadedFile, setUploadedFile] = useState(null);
 
-  // جلب الملفات من الـ S3
   useEffect(() => {
-    fetch('http://13.61.148.217:3000/api/file-names') 
-      .then(response => response.json())
-      .then(data => {
-        setFiles(data);
-      })
-      .catch(error => {
-        console.error('Error fetching files:', error);
-      });
+    fetch('http://13.61.148.217:3000/api/file-names')
+      .then(res => res.json())
+      .then(setFiles)
+      .catch(err => console.error('Fetch error:', err));
   }, []);
 
-  // التعامل مع رفع الملف
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
-    if (!file) {
-      alert('Please select a file to upload');
-      return;
-    }
+    if (!file) return alert('Please select a file first');
 
     const formData = new FormData();
     formData.append('file', file);
 
     try {
-      const response = await fetch('http://13.61.148.217:3000/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (response.ok) {
-        alert('File uploaded successfully!');
+      const res = await fetch('http://13.61.148.217:3000/api/upload', { method: 'POST', body: formData });
+      if (res.ok) {
+        alert('Upload successful');
         setUploadedFile(file.name);
       } else {
-        alert('Failed to upload file');
+        alert('Upload failed');
       }
-    } catch (error) {
-      console.error('Error uploading file:', error);
-      alert('Error uploading file');
+    } catch (err) {
+      console.error('Upload error:', err);
+      alert('Error uploading');
     }
   };
 
-  // التعامل مع اختيار الملف من قائمة S3
-  const handleFileSelect = (e) => {
-    setSelectedFile(e.target.value);
-  };
-
   return (
-    <div>
-      <h1>Upload and Select Files</h1>
+    <div className="file-uploader">
+      <header className="header">
+        <h1>Upload and View Files</h1>
+      </header>
 
-      {/* حقل تحميل الملفات من الكمبيوتر */}
-      <input type="file" onChange={handleFileUpload} />
-      <br />
+      <section className="upload-section">
+        <input type="file" onChange={handleFileUpload} />
+        <button className="cta-btn">Upload File</button>
+      </section>
 
-      {/* حقل اختيار الملفات من S3 */}
-      <select onChange={handleFileSelect}>
-        <option value="">Select a file from S3</option>
-        {files.map((file, index) => (
-          <option key={index} value={file}>
-            {file}
-          </option>
-        ))}
-      </select>
+      <section className="file-selection">
+        <h2>Select a File from S3</h2>
+        <select onChange={(e) => setSelectedFile(e.target.value)}>
+          <option value="">Choose a file...</option>
+          {files.map((file, idx) => (
+            <option key={idx} value={file}>{file}</option>
+          ))}
+        </select>
 
-      {/* عرض الملف الذي تم اختياره */}
-      {selectedFile && (
-        <div>
-          <p>Selected File: {selectedFile}</p>
-          <a href={`https://files--pool.s3.amazonaws.com/${selectedFile}`} target="_blank" rel="noopener noreferrer">
-            Open File
-          </a>
-        </div>
-      )}
+        {selectedFile && (
+          <div className="file-details">
+            <p>Selected: {selectedFile}</p>
+            <a href={`https://files--pool.s3.amazonaws.com/${selectedFile}`} target="_blank" rel="noopener noreferrer">
+              Open File
+            </a>
+          </div>
+        )}
+      </section>
 
-      {/* عرض الملف الذي تم رفعه */}
-      {uploadedFile && (
-        <div>
-          <p>Uploaded File: {uploadedFile}</p>
-        </div>
-      )}
+      {uploadedFile && <p className="uploaded-file">Uploaded: {uploadedFile}</p>}
     </div>
   );
 }
 
 export default FileUploader;
+
 
