@@ -55,7 +55,7 @@ header h1 {
   left: 0;
   width: 100%;
   height: 33%;
-  background-image: url('https://www.transparenttextures.com/patterns/clouds.png');
+  background-image: url('https://files--pool.s3.eu-north-1.amazonaws.com/fantasy-style-clouds.jpg');
   animation: clouds 30s linear infinite;
   z-index: -1;
   opacity: 0.6;
