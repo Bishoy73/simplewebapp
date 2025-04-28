@@ -27,6 +27,7 @@ function FileUploader() {
         alert('Upload successful');
         setUploadSuccess(true);
         setUploadedFile(file.name);
+        setTimeout(() => setUploadSuccess(false), 3000); // Hide success message after 3 seconds
       } else {
         alert('Upload failed');
       }
