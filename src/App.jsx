@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import './FileUploader.css'; // Custom CSS for styles
+import './App.css'; // Custom CSS for styles
 
 function FileUploader() {
   const [files, setFiles] = useState([]);
