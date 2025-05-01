@@ -4,6 +4,9 @@ body {
   padding: 0;
   height: 100vh;
   background: linear-gradient(to right, #00bcd4, #03a9f4); /* Gradient from turquoise to sky blue */
+  display: flex;
+  justify-content: center;  /* Center horizontally */
+  align-items: center;      /* Center vertically */
 }
 
 .file-uploader {
@@ -11,7 +14,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%; /* Make sure this takes the full height of the screen */
+  width: 100%;
+  height: 80%;  /* Adjusted height for better spacing */
   padding: 20px;
 }
 
@@ -93,5 +97,6 @@ body {
 .uploaded-file p {
   font-weight: bold;
 }
+
 
 
