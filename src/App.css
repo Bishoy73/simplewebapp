@@ -1,4 +1,4 @@
-./* الخلفية المتدرجة من الفيروزي للسماوي */
+/* الخلفية المتدرجة من الفيروزي للسماوي */
 .file-uploader {
   display: flex;
   flex-direction: column;
@@ -87,3 +87,4 @@
 .uploaded-file p {
   font-weight: bold;
 }
+
