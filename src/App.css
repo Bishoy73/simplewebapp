@@ -1,131 +1,85 @@
-/* تدرج الألوان من الأزرق إلى الفيروزي */
-body {
-  font-family: 'Arial', sans-serif;
-  background: linear-gradient(135deg, #00bcd4, #2196f3); /* تدرج من الفيروزي إلى الأزرق */
-  color: #333;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* تصميم الـ file-uploader */
 .file-uploader {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  height: 70%; /* ضبّط الارتفاع وفقًا للمساحة المطلوبة */
-  width: 70%;
-  text-align: center;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.8); /* خلفية بيضاء شفافة لتمييز المحتوى */
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: relative;
 }
 
 .header {
-  background-color: #FF6347;
-  color: white;
-  padding: 40px 0;
-  width: 100%;
-  position: relative;
-  z-index: 1;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-header h1 {
-  font-size: 2.5rem;
-}
-
-/* الحقول والزر */
 .upload-section {
-  margin: 40px 0;
-  position: relative;
-  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%; /* Control the width */
+  max-width: 600px; /* Maximum width for the box */
+  padding: 40px;
+  background: linear-gradient(45deg, #6a11cb, #2575fc); /* Gradient background */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for the box */
+  margin-bottom: 20px;
 }
 
 .upload-section input[type="file"] {
   padding: 10px;
-  margin: 10px;
-  border: 1px solid #ddd;
+  border: 2px solid #ddd;
   border-radius: 5px;
-  font-size: 1.1rem;
+  margin-bottom: 20px;
+  font-size: 16px;
 }
 
 .cta-btn {
-  padding: 12px 24px;
-  background-color: #20B2AA;
+  background: #2575fc; /* Matching button color to the gradient */
   color: white;
+  padding: 10px 20px;
   border: none;
-  cursor: pointer;
   border-radius: 5px;
-  font-size: 1.2rem;
-  transition: background-color 0.3s ease;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 .cta-btn:hover {
-  background-color: #FF6347;
+  background: #6a11cb;
 }
 
 .file-selection {
-  margin: 20px 0;
-  position: relative;
-  z-index: 1;
+  width: 80%; /* Control the width */
+  max-width: 600px; /* Maximum width */
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
 }
 
 .file-selection select {
-  padding: 12px;
+  padding: 10px;
+  border: 2px solid #ddd;
   border-radius: 5px;
-  border: 1px solid #ddd;
-  background-color: white;
-  font-size: 1rem;
-  width: 250px;
+  font-size: 16px;
 }
 
 .file-details {
-  margin-top: 20px;
-  font-size: 1.1rem;
+  margin-top: 10px;
 }
 
-.file-details a {
-  color: #20B2AA;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.file-details a:hover {
-  text-decoration: underline;
-}
-
-/* Success Message */
 .success-message {
-  margin-top: 30px;
-  background-color: #28a745;
+  background: #28a745; /* Green for success */
   color: white;
   padding: 15px;
-  border-radius: 10px;
-  font-size: 1.3rem;
-  font-weight: bold;
-  animation: fadeIn 1s ease-out;
-  transition: opacity 0.3s ease;
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 20px;
 }
 
-.success-message.fade-out {
-  opacity: 0;
-}
-
-/* Uploaded file details */
 .uploaded-file {
   margin-top: 20px;
-  font-size: 1.2rem;
-  color: #20B2AA;
+  text-align: center;
 }
 
-/* Animation for fading in success message */
-@keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+.uploaded-file p {
+  font-weight: bold;
 }
