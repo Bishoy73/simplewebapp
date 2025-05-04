@@ -8,7 +8,7 @@ function FileUploader() {
   const [uploadSuccess, setUploadSuccess] = useState(false);
 
   useEffect(() => {
-    fetch('http://16.16.57.242:3000/api/file-names')
+    fetch('http://51.21.134.239:3000/api/file-names')
       .then(res => res.json())
       .then(setFiles)
       .catch(err => console.error('Fetch error:', err));
@@ -22,7 +22,7 @@ function FileUploader() {
     formData.append('file', file);
 
     try {
-      const res = await fetch('http://16.16.57.242:3000/api/upload', { method: 'POST', body: formData });
+      const res = await fetch('http://51.21.134.239:3000/api/upload', { method: 'POST', body: formData });
       if (res.ok) {
         alert('Upload successful');
         setUploadSuccess(true);
